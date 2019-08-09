@@ -82,5 +82,6 @@ You can also check whether issuance was successful with kubectl get secret examp
 
 # URLs
 
-References https://docs.cert-manager.io/en/latest/tasks/issuers/setup-ca.html#optional-generate-a-signing-key-pair
-           https://github.com/jetstack/cert-manager/issues/279
+References 
+  https://docs.cert-manager.io/en/latest/tasks/issuers/setup-ca.html#optional-generate-a-signing-key-pair  
+  https://github.com/jetstack/cert-manager/issues/279  

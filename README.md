@@ -127,5 +127,6 @@ kubectl delete -f test-resources.yaml
 
 # URLs
 
-References https://kubernetes.github.io/ingress-nginx/deploy/
-           https://github.com/jetstack/cert-manager/issues/279
+References: 
+  https://kubernetes.github.io/ingress-nginx/deploy/  
+  https://github.com/jetstack/cert-manager/issues/279    
