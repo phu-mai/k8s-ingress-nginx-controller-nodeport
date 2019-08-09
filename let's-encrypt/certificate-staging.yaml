@@ -1,0 +1,22 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: example-com
+spec:
+  secretName: example-issuer-account-key
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  commonName: hello-service.certs-manager.showroom.internal.lel.asia
+  dnsNames:
+  - hello-service.certs-manager.showroom.internal.lel.asia
+  acme:
+    config:
+    - http01:
+        ingressClass: nginx
+      domains:
+      - hello-service.certs-manager.showroom.internal.lel.asia
+    - http01:
+        ingress: ingress-hello-app
+      domains:
+      - hello-service.certs-manager.showroom.internal.lel.asia

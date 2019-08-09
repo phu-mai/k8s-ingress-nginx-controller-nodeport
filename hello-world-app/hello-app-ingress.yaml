@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-hello-app
+  # namespace: certs-manager
+spec:
+  tls: 
+   - secretName: example-issuer-account-key
+     hosts:
+      - hello-service.certs-manager.showroom.internal.lel.asia
+  rules:
+  - host: hello-service.certs-manager.showroom.internal.lel.asia
+    http:
+      paths:
+      - backend:
+          serviceName: hello-service
+          servicePort: 80
+        path: /

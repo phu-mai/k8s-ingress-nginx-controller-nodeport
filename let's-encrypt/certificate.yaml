@@ -1,0 +1,15 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: cert-tls
+spec:
+  secretName: cert-tls-tls
+  issuerRef:
+    name: letsencrypt
+  commonName: cert-tls.showroom.internal.lel.asia
+  acme:
+    config:
+      - http01:
+          ingress: hello-app 
+        domains:
+          - cert-tls.showroom.internal.lel.asia
