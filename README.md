@@ -1,5 +1,13 @@
 
-#  Installing nginx ingress-controller
+# Kubernetes Ingress
+## What is the Ingress Controller  
+
+The Ingress controller is an application that runs in a cluster and configures an HTTP load balancer according to Ingress resources. The load balancer can be a software load balancer running in the cluster or a hardware or cloud load balancer running externally. Different load balancers require different Ingress controller implementations.
+
+In the case of NGINX, the Ingress controller is deployed in a pod along with the load balancer.
+
+
+## Installing nginx ingress-controller
 In order for the ingress resource to work, the cluster must have an ingress controller running. Ingress controllers are not automatically installed and started by the cluster.
 
 Nginx Ingress Controller Installation Guide: https://kubernetes.github.io/ingress-nginx/deploy/
@@ -18,8 +26,18 @@ kubectl apply -f ingress-controller-mandatory.yaml
 kubectl apply -f nodeport-service.yaml
 ```
 
-#  Installing cert-manager
-## Create a namespace to run cert-manager in
+
+# Cert-manager  
+## What is the Cert-manager  
+
+Cert-manager is a native Kubernetes certificate management controller. It can help with issuing certificates from a variety of sources, such as Let’s Encrypt, HashiCorp Vault, Venafi, a simple signing keypair, or self signed.
+
+It will ensure certificates are valid and up to date, and attempt to renew certificates at a configured time before expiry.
+
+It is loosely based upon the work of kube-lego and has borrowed some wisdom from other similar projects e.g. kube-cert-manager.
+
+## Create a namespace to run cert-manager 
+
 ```
 kubectl create namespace cert-manager
 ```
@@ -32,7 +50,7 @@ This creates a chicken-and-egg problem, where cert-manager requires the webhook 
 
 We avoid this problem by disabling resource validation on the namespace that cert-manager runs in:
 
-You can read more about the webhook on (the webhook document)[https://docs.cert-manager.io/en/latest/getting-started/webhook.html]
+You can read more about the webhook on [the webhook document](https://docs.cert-manager.io/en/latest/getting-started/webhook.html)
 
 ## Disable resource validation on the cert-manager namespace
 ```
@@ -47,7 +65,7 @@ We can now go ahead and install cert-manager. All resources (the CustomResourceD
 kubectl apply -f cert-manager.yml
 ```
 
-If you are running kubectl v1.12 or below, you will need to add the --validate=false flag to your kubectl apply command above else you will receive a validation error relating to the caBundle field of the ValidatingWebhookConfiguration resource. This issue is resolved in Kubernetes 1.13 onwards. More details can be found in (kubernetes/kubernetes#69590.)[https://github.com/kubernetes/kubernetes/issues/69590]
+If you are running kubectl v1.12 or below, you will need to add the --validate=false flag to your kubectl apply command above else you will receive a validation error relating to the caBundle field of the ValidatingWebhookConfiguration resource. This issue is resolved in Kubernetes 1.13 onwards. More details can be found in [kubernetes/kubernetes#69590.](https://github.com/kubernetes/kubernetes/issues/69590)
 
 
 ## Verifying the installation
@@ -62,7 +80,7 @@ webhook-78fb756679-9bsmf           1/1     Running     0          2m
 webhook-ca-sync-1543708620-n82gj   0/1     Completed   0          1m
 ```
 
-You should see both the cert-manager and webhook component in a Running state, and the ca-sync pod is Completed. If the webhook has not Completed but the cert-manager pod has recently started, wait a few minutes for the ca-sync pod to be retried. If you experience problems, please check the (troubleshooting guide.) [https://docs.cert-manager.io/en/latest/getting-started/troubleshooting.html]
+You should see both the cert-manager and webhook component in a Running state, and the ca-sync pod is Completed. If the webhook has not Completed but the cert-manager pod has recently started, wait a few minutes for the ca-sync pod to be retried. If you experience problems, please check the [troubleshooting guide.](https://docs.cert-manager.io/en/latest/getting-started/troubleshooting.html)
 
 ## Create a ClusterIssuer to test the webhook works okay
 ```
@@ -128,5 +146,7 @@ kubectl delete -f test-resources.yaml
 # URLs
 
 References:   
-  https://kubernetes.github.io/ingress-nginx/deploy/  
-  https://github.com/jetstack/cert-manager/issues/279    
+  https://github.com/nginxinc/kubernetes-ingress    
+  https://docs.cert-manager.io/en/latest/index.html   
+  https://kubernetes.github.io/ingress-nginx/deploy/    
+  https://github.com/jetstack/cert-manager/issues/279      
